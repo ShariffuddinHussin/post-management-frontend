@@ -5,7 +5,10 @@ import router from './router/index';
 import axios from 'axios';
 import Vuetify from 'vuetify';
 
-window.axios = axios
+// window.axios = require('axios');
+// window.axios 
+Vue.use(axios)
+
 Vue.use(Vuetify)
 Vue.config.productionTip = false
 

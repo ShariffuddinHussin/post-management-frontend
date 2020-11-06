@@ -10,7 +10,7 @@
       </div>
     </v-toolbar>
     <main>
-      <v-container fluid>
+      <v-container>
         <router-view></router-view>
       </v-container>
     </main>

@@ -1,40 +1,54 @@
 <template>
-  <div class="text-md-center">
-    <h2>Login</h2>
-    <v-layout>
-      <v-flex xs6 offset-xs3>
-        <v-card>
-          <v-card-text>
-            <v-text-field
-              v-model="login.email"
-              label="Email"
-              required
-            ></v-text-field>
-
-            <v-text-field
-              v-model="login.password"
-              label="Password"
-              required
-            ></v-text-field>
-          </v-card-text>
-           <v-btn class="mb-3" success> Login </v-btn>
-        </v-card>
-      </v-flex>
-    </v-layout>
-  </div>
+    <div>
+        <h4>Login</h4>
+        <form>
+            <label for="email" >E-Mail Address</label>
+            <div>
+                <input id="email" type="email" v-model="email" required autofocus>
+            </div>
+            <div>
+                <label for="password" >Password</label>
+                <div>
+                    <input id="password" type="password" v-model="password" required>
+                </div>
+            </div>
+            <div>
+                <button type="submit" @click="handleSubmit">
+                    Login
+                </button>
+            </div>
+        </form>
+    </div>
 </template>
-
 <script>
+import axios from "axios";
 export default {
     data(){
-        return{
-            login:{
-                email: "",
-                password: ""
+        return {
+                email : "",
+                password : ""
+            }
+
+    },
+       methods : {
+            handleSubmit(e){
+                e.preventDefault()
+                if (this.password.length > 0) {
+                    axios.post('http://post-management-backend.test/api/login', {
+                        email: this.email,
+                        password: this.password
+                    })
+                    .then(response => {
+                        console.log("success");
+                         return response
+                    })
+                    .catch(function (error) {
+                        console.error(error.response);
+                    });
+                }
             }
         }
     }
-};
 </script>
 
 <style>
