@@ -28,7 +28,7 @@
               </v-list-item>
 
               <v-card-actions>
-                <edit/>
+                <edit />
                 <!-- <v-btn class="ma-2" color="success">
                   <v-icon> mdi-pencil </v-icon> Edit
                 </v-btn> -->
@@ -49,10 +49,10 @@ import axios from "axios";
 import create from "../modal/create";
 import edit from "../modal/edit";
 export default {
-  components: { 
-    create, 
-    edit
-     },
+  components: {
+    create,
+    edit,
+  },
   data() {
     return {
       dialog: false,
@@ -71,6 +71,12 @@ export default {
         this.post = response.data.data;
       });
     return response;
+  },
+  // delete
+  methods: {
+    editPost: function () {
+
+    },
   },
 };
 </script>
