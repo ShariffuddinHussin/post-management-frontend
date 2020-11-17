@@ -1,7 +1,7 @@
 <template>
   <v-card color="grey lighten-4" flat height="200px" tile>
     <v-toolbar dense>
-      <v-toolbar-title>Login</v-toolbar-title>
+      <v-toolbar-title>Post Management System</v-toolbar-title>
       <v-spacer></v-spacer>
       <div>
         <router-link to="/register" tag="span"
