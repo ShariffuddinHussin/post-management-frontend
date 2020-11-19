@@ -18,6 +18,7 @@
                   <v-list-item-subtitle>{{
                     post.description
                   }}</v-list-item-subtitle>
+                  <v-list-item-subtitle>{{ post.id }}</v-list-item-subtitle>
                   <v-list-item-subtitle
                     >author :{{ post.user_id }}
                   </v-list-item-subtitle>
@@ -32,7 +33,7 @@
                 <!-- <v-btn class="ma-2" color="success">
                   <v-icon> mdi-pencil </v-icon> Edit
                 </v-btn> -->
-                <v-btn class="ma-2" color="error">
+                <v-btn class="ma-2" color="error" @click="deletePost(post.id)">
                   <v-icon> mdi-delete </v-icon> Delete
                 </v-btn>
               </v-card-actions>
@@ -45,9 +46,13 @@
 </template>
 
 <script>
+import Vue from "vue";
 import axios from "axios";
+import VueAxios from "vue-axios";
 import create from "../modal/create";
 import edit from "../modal/edit";
+
+Vue.use(VueAxios, axios);
 export default {
   components: {
     create,
@@ -55,27 +60,36 @@ export default {
   },
   data() {
     return {
-      dialog: false,
-      post: undefined,
+      post: null,
     };
   },
   name: "view",
-  async mounted() {
-    const response = await axios
-      .get("http://post-management-backend.test/api/posts", {
-        headers: {
-          Authorization: "Bearer " + localStorage.getItem("token"),
-        },
-      })
-      .then((response) => {
-        this.post = response.data.data;
-      });
-    return response;
+  mounted() {
+    this.getPost();
   },
   // delete
   methods: {
-    editPost: function () {
-
+    getPost() {
+      this.axios
+        .get("http://post-management-backend.test/api/posts", {
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("token"),
+          },
+        })
+        .then((result) => {
+          this.post = result.data.data;
+        });
+    },
+    deletePost(id) {
+      this.axios.delete("http://post-management-backend.test/api/posts/" + id,{
+         headers: {
+            Authorization: "Bearer " + localStorage.getItem("token"),
+          },
+      })
+      .then(()=>{
+        this.getPost();
+      });
+      
     },
   },
 };
