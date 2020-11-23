@@ -1,11 +1,11 @@
 <template>
-  <v-card color="grey lighten-4" flat height="200px" tile>
+  <v-card color="grey lighten-4" text height="200px" tile>
     <v-toolbar dense>
       <v-toolbar-title>Post Management System</v-toolbar-title>
       <v-spacer></v-spacer>
       <div>
         <router-link to="/register" tag="span"
-          ><v-btn flat>Register</v-btn></router-link
+          ><v-btn text>Register</v-btn></router-link
         >
       </div>
     </v-toolbar>
