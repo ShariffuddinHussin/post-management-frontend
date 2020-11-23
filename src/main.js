@@ -12,6 +12,7 @@ Vue.use(axios)
 Vue.use(Vuetify)
 Vue.config.productionTip = false
 
+
 new Vue({
   vuetify,
   router,

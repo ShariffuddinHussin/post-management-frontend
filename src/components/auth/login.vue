@@ -48,7 +48,7 @@ export default {
   methods: {
     async handleSubmit() {
       const response = await axios.post(
-        "http://post-management-backend.test/api/login",
+        process.env.VUE_APP_ROOT_URL + "api/login",
         {
           email: this.email,
           password: this.password,

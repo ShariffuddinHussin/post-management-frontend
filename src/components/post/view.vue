@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <div class="text-right">
+    <div class="mx-6 my-6">
       <create />
     </div>
 
@@ -29,10 +29,13 @@
               </v-list-item>
 
               <v-card-actions>
-                <edit />
-                <!-- <v-btn class="ma-2" color="success">
-                  <v-icon> mdi-pencil </v-icon> Edit
-                </v-btn> -->
+                <template v-if="true">
+                  <v-spacer></v-spacer>
+                  <div class="mx-6">
+                    <edit :post="post" />
+                  </div>
+                </template>
+
                 <v-btn class="ma-2" color="error" @click="deletePost(post.id)">
                   <v-icon> mdi-delete </v-icon> Delete
                 </v-btn>
@@ -54,6 +57,7 @@ import edit from "../modal/edit";
 
 Vue.use(VueAxios, axios);
 export default {
+  props: {},
   components: {
     create,
     edit,
@@ -71,7 +75,7 @@ export default {
   methods: {
     getPost() {
       this.axios
-        .get("http://post-management-backend.test/api/posts", {
+        .get(process.env.VUE_APP_ROOT_URL + "api/posts", {
           headers: {
             Authorization: "Bearer " + localStorage.getItem("token"),
           },
@@ -81,15 +85,15 @@ export default {
         });
     },
     deletePost(id) {
-      this.axios.delete("http://post-management-backend.test/api/posts/" + id,{
-         headers: {
+      this.axios
+        .delete(process.env.VUE_APP_ROOT_URL + "api/posts/" + id, {
+          headers: {
             Authorization: "Bearer " + localStorage.getItem("token"),
           },
-      })
-      .then(()=>{
-        this.getPost();
-      });
-      
+        })
+        .then(() => {
+          this.getPost();
+        });
     },
   },
 };

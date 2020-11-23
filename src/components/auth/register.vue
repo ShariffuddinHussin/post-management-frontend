@@ -57,7 +57,7 @@ export default {
   methods: {
     async handleSubmit() {
       const response = await axios.post(
-        "http://post-management-backend.test/api/register",
+        process.env.VUE_APP_ROOT_URL+"api/register",
         {
           name: this.name,
           email: this.email,
