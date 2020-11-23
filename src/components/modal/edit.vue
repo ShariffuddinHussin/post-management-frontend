@@ -1,84 +1,89 @@
 <template>
-  <div class="text-right">
-    <v-row>
-      <v-dialog v-model="dialog" persistent max-width="600px">
-        <template v-slot:activator="{ on, attrs }">
-          <v-btn color="primary" dark v-bind="attrs" v-on="on">
-            <v-icon> mdi-pencil </v-icon> Edit
+  <v-row>
+    <v-dialog persistent width="600px" v-model="dialog">
+      <template v-slot:activator="{ on, attrs }">
+        <v-btn color="primary" dark v-bind="attrs" v-on="on">
+          <v-icon> mdi-pencil </v-icon>
+          Edit
+        </v-btn>
+      </template>
+      <v-card>
+        <v-card-title>
+          <span class="headline">New Post</span>
+        </v-card-title>
+        <v-card-text>
+          <v-container>
+            <v-row>
+              {{ id }}
+              <v-col cols="12">
+                <v-text-field
+                  label="Title"
+                  required
+                  v-model="title"
+                ></v-text-field>
+              </v-col>
+              <v-col cols="12">
+                <v-text-field
+                  label="Description"
+                  required
+                  v-model="description"
+                ></v-text-field>
+              </v-col>
+            </v-row>
+          </v-container>
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="blue darken-1" text @click="closeDialog()">
+            Close
           </v-btn>
-        </template>
-        <v-card>
-          <v-card-title>
-            <span class="headline">New Post</span>
-          </v-card-title>
-          <v-card-text>
-            <v-container>
-              <v-row>
-                <v-col cols="12">
-                  <v-text-field
-                    label="Title"
-                    required
-                    v-model="propObj.title"
-                  ></v-text-field>
-                </v-col>
-                <v-col cols="12">
-                  <v-text-field
-                    label="Description"
-                    required
-                    v-model="propObj.description"
-                  ></v-text-field>
-                </v-col>
-              </v-row>
-            </v-container>
-          </v-card-text>
-          <v-card-actions>
-            <v-spacer></v-spacer>
-            <v-btn color="blue darken-1" text @click="dialog = false">
-              Close
-            </v-btn>
-            <v-btn
-              color="blue darken-1"
-              text
-              @click="editPost(post.id), (dialog = false)"
-            >
-              Save
-            </v-btn>
-          </v-card-actions>
-        </v-card>
-      </v-dialog>
-    </v-row>
-  </div>
+          <v-btn color="blue darken-1" text @click="savePost()">Save</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+  </v-row>
 </template>
 
 <script>
-// import axios from "axios";
+import axios from "axios";
 export default {
-  props: {
-    propObj: {
-      type: Object,
-      required: false,
-      default: function () {
-        return {
-          id: "",
-          title: "",
-          description: "",
-        };
-      },
-    },
+  props: ["post"],
+  data() {
+    return {
+      dialog: false,
+      id: this.post.id,
+      title: this.post.title,
+      description: this.post.description,
+    };
   },
-  data: () => ({
-    dialog: false,
-  }),
   methods: {
     closeDialog: function () {
       this.dialog = false;
     },
-    editPost: function (id) {
-      console.log(id);
+    savePost: function () {
+      this.dialog = false;
+      try {
+        let response = axios.patch(
+          process.env.VUE_APP_ROOT_URL + "api/posts/" + this.post.id,
+          {
+            title: this.title,
+            description: this.description,
+          },
+          {
+            headers: {
+              "Content-type": "application/json",
+              Authorization: "Bearer " + localStorage.getItem("token"),
+            },
+          }
+        );
+        return response;
+      } catch (error) {
+        window.alert(error);
+        console.log(error);
+      }
     },
   },
 };
 </script>
-
 <style>
 </style>
