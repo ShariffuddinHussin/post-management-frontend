@@ -1,28 +1,25 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+  <v-card color="grey lighten-4" flat height="200px" tile>
+    <v-toolbar dense>
+      <v-toolbar-title>Post Management System</v-toolbar-title>
+      <v-spacer></v-spacer>
+      <div>
+        <router-link to="/register" tag="span"
+          ><v-btn flat>Register</v-btn></router-link
+        >
+      </div>
+    </v-toolbar>
+    <main>
+      <v-container>
+        <router-view></router-view>
+      </v-container>
+    </main>
+  </v-card>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
-export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  }
-}
+export default {};
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
 </style>
